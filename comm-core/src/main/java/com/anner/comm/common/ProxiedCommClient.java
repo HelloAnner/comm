@@ -27,6 +27,7 @@ public abstract class ProxiedCommClient extends BaseCommClient {
                throws Exception;
 
      @Override
+     @SuppressWarnings("unchecked")
      public <T> T createCaller(Class<T> callerInterface) {
           CommServiceInfo info = CommAnnotationUtils.getServicesInfo(callerInterface);
           return (T) Proxy.newProxyInstance(callerInterface.getClassLoader(), new Class[] { callerInterface },

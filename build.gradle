@@ -15,11 +15,6 @@ repositories {
 
 dependencies {
 
-    implementation('io.grpc:grpc-netty-shaded:1.53.0')
-    // implementation('io.grpc:grpc-protobuf::1.53.0')
-    // implementation('io.grpc:grpc-stub:1.53.0')
-
-
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.easymock:easymock:4.3'
 

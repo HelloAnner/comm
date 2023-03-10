@@ -2,6 +2,7 @@ package com.anner.comm.loadbalancer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.anner.comm.common.CommClient;
 
@@ -64,9 +65,9 @@ public class DefaultLoadBalancer extends AbstractLoadBalancer {
                }
           }
 
-          bestState.currentWeight -= total;
+          Optional.ofNullable(bestState).get().currentWeight -= total;
 
-          return best.identifier();
+          return Optional.of(best).get().identifier();
      }
 
      private static class PeerState {

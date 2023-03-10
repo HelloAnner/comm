@@ -27,6 +27,7 @@ public abstract class BaseCommClient implements CommClient {
      }
 
      @Override
+     @SuppressWarnings("unchecked")
      public <T> T getAttribute(String key) {
           return (T) attrMap.get(key);
      }

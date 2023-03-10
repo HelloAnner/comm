@@ -1,11 +1,6 @@
 package com.anner.comm.common.internal;
 
-import com.anner.comm.common.BaseCommClient;
-import com.anner.comm.common.CommClientFactory;
-import com.anner.comm.common.internal.helper.ExceptionWrappedInputStream;
-import com.anner.comm.info.CommProperties;
-import com.anner.comm.loadbalancer.CommLoadBalancer;
-import com.anner.comm.stream.CommStreamPipe;
+import static com.anner.comm.info.CommProperties.TYPE;
 
 import java.io.IOException;
 import java.io.PipedInputStream;
@@ -20,7 +15,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.anner.comm.info.CommProperties.TYPE;
+import com.anner.comm.common.BaseCommClient;
+import com.anner.comm.common.CommClientFactory;
+import com.anner.comm.common.internal.helper.ExceptionWrappedInputStream;
+import com.anner.comm.info.CommProperties;
+import com.anner.comm.loadbalancer.CommLoadBalancer;
+import com.anner.comm.stream.CommStreamPipe;
 
 public class InternalCommClient extends BaseCommClient implements CommLoadBalancer {
 
@@ -28,7 +28,6 @@ public class InternalCommClient extends BaseCommClient implements CommLoadBalanc
     private static final String SERVER = "server";
 
     private static final int PIPE_BUF_SIZE = 1024 * 1024;
-
 
     private final InternalCommServer server;
     private final Map<Class<?>, Object> pMap = new ConcurrentHashMap<>();
@@ -65,11 +64,12 @@ public class InternalCommClient extends BaseCommClient implements CommLoadBalanc
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T createCaller(Class<T> callerInterface) {
         T t = (T) server.getService(callerInterface);
         return (T) Proxy.newProxyInstance(
                 callerInterface.getClassLoader(),
-                new Class[]{callerInterface},
+                new Class[] { callerInterface },
                 (proxy, method, args) -> {
                     Object result = method.invoke(t, args);
                     if (result instanceof CommStreamPipe) {
@@ -77,11 +77,11 @@ public class InternalCommClient extends BaseCommClient implements CommLoadBalanc
                         return convertPipe((CommStreamPipe) result);
                     }
                     return result;
-                }
-        );
+                });
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T getCaller(Class<T> callerInterface) {
         return (T) pMap.computeIfAbsent(callerInterface, this::createCaller);
     }

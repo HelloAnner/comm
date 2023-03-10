@@ -7,7 +7,8 @@
 
 - [x] Finish comm-core module
 - [x] Finish grpc module
-- [ ] Add some GRPC unit test 
+- [x] Add some GRPC unit test 
+- [ ] Finish GRPC Stream 
 - [ ] Support GRPC Stream
 - [ ] Add Http comm mode
 - [ ] Add some Http unit test
