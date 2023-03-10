@@ -62,10 +62,10 @@ public class CommProperties implements Cloneable {
           return o.toString();
      }
 
-     public boolean getAsBool(String key, Boolean defaultValue) {
+     public boolean getAsBool(String key) {
           Object o = get(key);
           if (o == null) {
-               return defaultValue;
+               return false;
           }
           if (o instanceof Boolean) {
                return (boolean) o;
