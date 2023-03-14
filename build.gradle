@@ -1,29 +1,25 @@
-
 plugins {
-    // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
 }
 
 allprojects{
-        apply plugin: 'java-library'
+    apply plugin: 'java-library'
+    repositories {
+        mavenLocal()
+        google()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+    }
 
-repositories {
-    mavenLocal()
-    google()
-    maven { url 'https://maven.aliyun.com/repository/public' }
-}
-
-dependencies {
-
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.easymock:easymock:4.3'
+    dependencies {
+        testImplementation 'junit:junit:4.13.2'
+        testImplementation 'org.easymock:easymock:4.3'
 
 }
 
-group = 'com.anner'
-version = '1.0'
-description = 'comm'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+    group = 'com.anner'
+    version = '1.0'
+    description = 'comm'
+    java.sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
 
